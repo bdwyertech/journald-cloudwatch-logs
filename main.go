@@ -85,6 +85,9 @@ func run(configFilename string) error {
 	}
 
 	bootId, err := journal.GetData("_BOOT_ID")
+	if err != nil {
+		return fmt.Errorf("unable to retrieve Boot ID: %w", err)
+	}
 	bootId = bootId[9:] // Trim off "_BOOT_ID=" prefix
 
 	// If the boot id has changed since our last run then we'll start from
