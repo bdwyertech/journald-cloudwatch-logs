@@ -43,7 +43,7 @@ type Record struct {
 	Priority       Priority        `json:"priority" journald:"PRIORITY"`
 	Message        json.RawMessage `json:"message" journald:"MESSAGE"`
 	MessageId      string          `json:"messageId,omitempty" journald:"MESSAGE_ID"`
-	Errno          int             `json:"machineId,omitempty" journald:"ERRNO"`
+	Errno          int             `json:"errno,omitempty" journald:"ERRNO"`
 	Syslog         RecordSyslog    `json:"syslog,omitempty"`
 	Kernel         RecordKernel    `json:"kernel,omitempty"`
 	Container_Name string          `json:"containerName,omitempty" journald:"CONTAINER_NAME"`
