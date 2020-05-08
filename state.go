@@ -6,7 +6,6 @@ import (
 )
 
 const stateFormat = "%s\n%s\n"
-const mapSize = 64
 
 type State struct {
 	file *os.File
