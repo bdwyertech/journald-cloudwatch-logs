@@ -1,28 +1,24 @@
 FROM centos:7
 
-ENV GIT_VERSION tweaks
-
 MAINTAINER Brian Dwyer
 
-RUN mkdir -p /go/bin && chmod -R 777 /go && cd /go \
-		&& yum -y update \
-		&& yum install -y centos-release-scl \
-		&& yum -y install git \
-		  openssl-devel systemd-devel \
-  		go-toolset-7-golang \
-		&& yum clean all
+RUN curl -L https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz | tar xzf - --directory /usr/local
 
-ENV GOPATH=/go \
-		GOOS=linux \
-		BASH_ENV=/opt/rh/go-toolset-7/enable \
-		ENV=/opt/rh/go-toolset-7/enable \
-		PROMPT_COMMAND=". /opt/rh/go-toolset-7/enable"
+ENV PATH="/root/go/bin:/usr/local/go/bin:${PATH}"
+
+RUN yum install -y openssl-devel systemd-devel gcc git \
+    && go get honnef.co/go/tools/cmd/staticcheck
 
 WORKDIR /go/src/journald-cloudwatch-logs
 
 COPY . .
 
-RUN set -ex \
-    && . /opt/rh/go-toolset-7/enable \
-    && go get -v \
-    && go build -v .
+ARG TEST
+RUN if [ "x$TEST" != "x" ] ; then \
+      go fmt $(go list ./... | grep -v /vendor/) | xargs -I {} -r /bin/sh -c "/bin/echo {} && exit 1" \
+      && go vet $(go list ./... | grep -v /vendor/) \
+      && staticcheck $(go list ./... | grep -v /vendor/) \
+      && go test -v -race $(go list ./... | grep -v /vendor/); \
+    fi
+
+RUN go build -v .
