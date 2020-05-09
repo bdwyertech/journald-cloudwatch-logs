@@ -62,7 +62,7 @@ func run(configFilename string) error {
 
 	state, err := OpenState(config.StateFilename)
 	if err != nil {
-		return fmt.Errorf("Failed to open %s: %s", config.StateFilename, err)
+		return fmt.Errorf("failed to open %s: %s", config.StateFilename, err)
 	}
 
 	lastBootId, nextSeq := state.LastState()
@@ -111,7 +111,7 @@ func run(configFilename string) error {
 
 	err = state.SetState(bootId, nextSeq)
 	if err != nil {
-		return fmt.Errorf("Failed to write state: %s", err)
+		return fmt.Errorf("failed to write state: %s", err)
 	}
 
 	bufSize := config.BufferSize
@@ -126,12 +126,12 @@ func run(configFilename string) error {
 
 		nextSeq, err = writer.WriteBatch(batch)
 		if err != nil {
-			return fmt.Errorf("Failed to write to cloudwatch: %s", err)
+			return fmt.Errorf("failed to write to cloudwatch: %s", err)
 		}
 
 		err = state.SetState(bootId, nextSeq)
 		if err != nil {
-			return fmt.Errorf("Failed to write state: %s", err)
+			return fmt.Errorf("failed to write state: %s", err)
 		}
 
 	}
@@ -140,7 +140,7 @@ func run(configFilename string) error {
 	// Last chance to write the state.
 	err = state.SetState(bootId, nextSeq)
 	if err != nil {
-		return fmt.Errorf("Failed to write state on exit: %s", err)
+		return fmt.Errorf("failed to write state on exit: %s", err)
 	}
 
 	return nil
