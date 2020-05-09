@@ -95,7 +95,6 @@ func run(configFilename string) error {
 	// boot id then we'll seek to the end of the stream to avoid repeating
 	// anything. However, we will miss any items that were added while we
 	// weren't running.
-	skip := uint64(0)
 	if bootId == lastBootId {
 		// If we're still in the same "boot" as we were last time then
 		// we were stopped and started again, so we'll seek to the last
@@ -104,9 +103,6 @@ func run(configFilename string) error {
 		// running.
 		journal.SeekTail()
 		journal.Next()
-		// Skip the last item so our log will resume only when we get
-		// the *next item.
-		skip = 1
 	}
 
 	err = state.SetState(bootId, nextSeq)
@@ -119,7 +115,7 @@ func run(configFilename string) error {
 	records := make(chan Record)
 	batches := make(chan []Record)
 
-	go ReadRecords(config.EC2InstanceId, journal, records, skip)
+	go ReadRecords(config.EC2InstanceId, journal, records, 0)
 	go BatchRecords(records, batches, bufSize)
 
 	for batch := range batches {
