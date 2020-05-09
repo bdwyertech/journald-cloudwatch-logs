@@ -112,7 +112,7 @@ func LoadConfig(filename string) (*Config, error) {
 	} else {
 		config.LogPriority, err = getLogLevel(fConfig.LogPriority)
 		if err != nil {
-			return nil, fmt.Errorf("The provided log filtering '%s' is unsupported by systemd!", fConfig.LogPriority)
+			return nil, fmt.Errorf("the provided log filtering '%s' is unsupported by systemd", fConfig.LogPriority)
 		}
 	}
 
