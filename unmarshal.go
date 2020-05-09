@@ -72,7 +72,7 @@ func unmarshalRecord(entry *sdjournal.JournalEntry, toVal reflect.Value) error {
 			fieldVal.SetString(value)
 		default:
 			// Should never happen
-			panic(fmt.Errorf("Can't unmarshal to %s", fieldType))
+			panic(fmt.Errorf("cannot unmarshal to %s", fieldType))
 		}
 	}
 
