@@ -14,6 +14,11 @@ var help = flag.Bool("help", false, "set to true to show this help")
 func main() {
 	flag.Parse()
 
+	if versionFlag {
+		showVersion()
+		os.Exit(0)
+	}
+
 	if *help {
 		usage()
 		os.Exit(0)
