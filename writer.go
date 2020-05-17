@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -128,6 +130,12 @@ func (w *Writer) WriteBatch(records []Record) (string, error) {
 					return "", fmt.Errorf("failed to put events: %s", err)
 				}
 				return w.nextSequenceToken, nil
+			}
+			if awsErr.Code() == "InvalidParameterException" {
+				if strings.HasPrefix(awsErr.Message(), "Log event too large") {
+					log.Println(fmt.Errorf("oversized log event: %s", err))
+					return w.nextSequenceToken, nil
+				}
 			}
 		}
 		return "", fmt.Errorf("failed to put events: %s", err)
