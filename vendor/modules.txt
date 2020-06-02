@@ -1,4 +1,4 @@
-# github.com/aws/aws-sdk-go v1.30.29
+# github.com/aws/aws-sdk-go v1.31.9
 ## explicit
 github.com/aws/aws-sdk-go/aws
 github.com/aws/aws-sdk-go/aws/awserr
@@ -37,10 +37,10 @@ github.com/aws/aws-sdk-go/private/protocol/xml/xmlutil
 github.com/aws/aws-sdk-go/service/cloudwatchlogs
 github.com/aws/aws-sdk-go/service/sts
 github.com/aws/aws-sdk-go/service/sts/stsiface
-# github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf
+# github.com/coreos/go-systemd/v22 v22.1.0
 ## explicit
-github.com/coreos/go-systemd/internal/dlopen
-github.com/coreos/go-systemd/sdjournal
+github.com/coreos/go-systemd/v22/internal/dlopen
+github.com/coreos/go-systemd/v22/sdjournal
 # github.com/hashicorp/hcl v1.0.0
 ## explicit
 github.com/hashicorp/hcl

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/coreos/go-systemd/sdjournal"
+	"github.com/coreos/go-systemd/v22/sdjournal"
 )
 
 func ReadRecords(instanceId string, journal *sdjournal.Journal, c chan<- Record, skip uint64) {
