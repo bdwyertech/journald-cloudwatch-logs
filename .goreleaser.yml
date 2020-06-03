@@ -6,13 +6,29 @@ before:
     # - go mod tidy
     # - go generate ./...
 builds:
-  - main: .
+  - id: amd64
+    main: .
     env:
       - CGO_ENABLED=1 # CGO Required for SystemD Library coreos/go-systemd/internal/dlopen
     goos:
       - linux
     goarch:
       - amd64
+    flags:
+      - -mod=vendor
+    ldflags:
+      - -s -w
+      - -X main.GitCommit={{.ShortCommit}}
+      - -X main.ReleaseVer={{.Version}}
+      - -X main.ReleaseDate={{.Date}}
+  - id: arm64
+    main: .
+    env:
+      - CGO_ENABLED=1 # CGO Required for SystemD Library coreos/go-systemd/internal/dlopen
+      - CC=aarch64-linux-gcc
+    goos:
+      - linux
+    goarch:
       - arm64
     flags:
       - -mod=vendor

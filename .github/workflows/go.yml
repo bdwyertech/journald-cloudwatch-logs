@@ -7,14 +7,15 @@ jobs:
     strategy:
       matrix:
         go: ['1.14.3']
-        image: ['centos:7']
+        # image: ['centos:7']
+        image: ['bdwyertech/centos-xc:latest']
     runs-on: ubuntu-latest
     container: ${{ matrix.image }}
     steps:
       - name: Install Dependencies
         run: |
-          yum install -y epel-release
-          yum install -y openssl-devel systemd-devel gcc gcc-aarch64-linux-gnu git
+          yum install -y openssl-devel systemd-devel gcc git
+          ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
           curl -L https://dl.google.com/go/go${{ matrix.go }}.linux-amd64.tar.gz | tar xzf - --directory /usr/local
           /usr/local/go/bin/go get -v honnef.co/go/tools/cmd/staticcheck
           echo "::add-path::$HOME/go/bin"
