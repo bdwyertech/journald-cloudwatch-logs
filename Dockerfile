@@ -2,7 +2,7 @@ FROM centos:7
 
 MAINTAINER Brian Dwyer
 
-RUN curl -L https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz | tar xzf - --directory /usr/local
+RUN curl -L https://dl.google.com/go/go1.16.2.linux-amd64.tar.gz | tar xzf - --directory /usr/local
 
 ENV PATH="/root/go/bin:/usr/local/go/bin:${PATH}"
 
