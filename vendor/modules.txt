@@ -1,4 +1,4 @@
-# github.com/aws/aws-sdk-go v1.37.14
+# github.com/aws/aws-sdk-go v1.38.5
 ## explicit
 github.com/aws/aws-sdk-go/aws
 github.com/aws/aws-sdk-go/aws/awserr
@@ -41,7 +41,7 @@ github.com/aws/aws-sdk-go/service/sso
 github.com/aws/aws-sdk-go/service/sso/ssoiface
 github.com/aws/aws-sdk-go/service/sts
 github.com/aws/aws-sdk-go/service/sts/stsiface
-# github.com/coreos/go-systemd/v22 v22.1.0
+# github.com/coreos/go-systemd/v22 v22.3.0
 ## explicit
 github.com/coreos/go-systemd/v22/internal/dlopen
 github.com/coreos/go-systemd/v22/sdjournal
