@@ -20,6 +20,7 @@ jobs:
           yum install -y https://repo.ius.io/ius-release-el7.rpm
           yum install -y openssl-devel systemd-devel gcc git236 wget
           ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
+          git config --global --add safe.directory $GITHUB_WORKSPACE
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v3
