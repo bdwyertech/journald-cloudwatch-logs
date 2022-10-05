@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"reflect"
 	"strings"
@@ -62,7 +61,7 @@ func getLogLevel(priority string) (Priority, error) {
 }
 
 func LoadConfig(filename string) (*Config, error) {
-	configBytes, err := ioutil.ReadFile(filename)
+	configBytes, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
