@@ -11,9 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     container: ${{ matrix.image }}
     steps:
-      - uses: actions/setup-go@v5
-        with:
-          go-version: ${{ matrix.go }}
+      - name: Install Go
+        run: |
+          curl -OL https://go.dev/dl/go1.24.2.linux-amd64.tar.gz
+          tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
+          export PATH=$PATH:/usr/local/go/bin
+          echo "PATH=$PATH:/usr/local/go/bin" >> $GITHUB_ENV
+          go version # Verify installation
+
       - name: Install Dependencies
         run: |
           # Leverage IUS Repository for latest version of GIT
