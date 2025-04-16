@@ -21,6 +21,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          yum install -y https://archives.fedoraproject.org/pub/archive/epel/7/x86_64/Packages/e/epel-release-7-14.noarch.rpm
           # Leverage IUS Repository for latest version of GIT
           yum install -y https://repo.ius.io/ius-release-el7.rpm
           yum install -y openssl-devel systemd-devel gcc git236 wget
