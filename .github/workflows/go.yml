@@ -8,10 +8,10 @@ jobs:
         go: ['1.24']
         # image: ['centos:7']
         image: ['bdwyertech/centos-xc:latest']
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: ${{ matrix.image }}
     steps:
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
       - name: Install Dependencies
