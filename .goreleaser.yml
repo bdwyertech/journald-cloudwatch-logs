@@ -1,6 +1,8 @@
 # Encoding: UTF-8
 project_name: journald-cloudwatch-logs
 
+version: 2
+
 before:
   hooks:
     # - go mod tidy
@@ -43,7 +45,7 @@ archives:
   - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
     format_overrides:
       - goos: windows
-        format: zip
+        formats: ['zip']
     files:
       - ONLY_BINARY*
 
@@ -51,7 +53,7 @@ checksum:
   name_template: 'checksums.txt'
 
 snapshot:
-  name_template: '{{ .Tag }}-next'
+  version_template: '{{ .Tag }}-next'
 
 changelog:
   sort: asc

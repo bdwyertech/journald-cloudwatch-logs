@@ -5,13 +5,13 @@ jobs:
     name: Build
     strategy:
       matrix:
-        go: ['1.19']
+        go: ['1.24']
         # image: ['centos:7']
         image: ['bdwyertech/centos-xc:latest']
     runs-on: ubuntu-latest
     container: ${{ matrix.image }}
     steps:
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
       - name: Install Dependencies
@@ -22,23 +22,19 @@ jobs:
           ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
           git config --global --add safe.directory $GITHUB_WORKSPACE
 
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
       - name: Git Info
         id: git
         run: |
-          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+          echo "SOURCE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+          echo "SOURCE_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+          echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Test
         env:
           GOFLAGS: '-mod=vendor'
-          STATICCHECK_VERSION: 'v0.3.3'
+          STATICCHECK_VERSION: '2025.1.1'
         run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
           wget -qO- https://github.com/dominikh/go-tools/releases/download/${STATICCHECK_VERSION}/staticcheck_linux_amd64.tar.gz | tar zxf - --directory /usr/local/bin --strip-components=1 staticcheck/staticcheck
           go fmt $(go list ./... | grep -v /vendor/) | xargs -I {} -r /bin/sh -c "/bin/echo {} && exit 1"
           go vet $(go list ./... | grep -v /vendor/)
@@ -47,8 +43,8 @@ jobs:
           go test -v -race $(go list ./... | grep -v /vendor/)
 
       - name: Run GoReleaser
-        if: startsWith(github.ref, 'refs/tags/') && (matrix.go == '1.19')
-        uses: goreleaser/goreleaser-action@v3
+        if: startsWith(github.ref, 'refs/tags/') && (matrix.go == 1.24)
+        uses: goreleaser/goreleaser-action@v6
         with:
           version: latest
           args: release
