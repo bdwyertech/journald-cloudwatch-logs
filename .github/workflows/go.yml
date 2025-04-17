@@ -11,20 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     container: ${{ matrix.image }}
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Install Dependencies
+        run: |
+          dnf install -y openssl-devel systemd-devel gcc git wget findutils
+          # ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
 
-      - name: Install Dependencies
-        run: |
-          dnf install -y openssl-devel systemd-devel gcc git wget findutils
-          # ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Git Info
         id: git
