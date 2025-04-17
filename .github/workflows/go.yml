@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          dnf install -y openssl-devel systemd-devel gcc git wget
+          dnf install -y openssl-devel systemd-devel gcc git wget findutils
           # ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
 
       - name: Git Info
