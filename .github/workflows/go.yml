@@ -14,7 +14,7 @@ jobs:
       - name: Install Dependencies
         run: |
           dnf install -y openssl-devel systemd-devel gcc git wget findutils
-          # ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
+          ln -s /usr/include/systemd/ /opt/cross/aarch64-ol8u10-linux-gnu/include/systemd
 
       - name: Set up Go
         uses: actions/setup-go@v5
