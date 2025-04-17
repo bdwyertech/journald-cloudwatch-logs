@@ -27,7 +27,7 @@ builds:
     main: .
     env:
       - CGO_ENABLED=1 # CGO Required for SystemD Library coreos/go-systemd/internal/dlopen
-      - CC=aarch64-linux-gcc
+      - CC=aarch64-ol8u10-linux-gnu-gcc
     goos:
       - linux
     goarch:
