@@ -7,26 +7,19 @@ jobs:
       matrix:
         go: ['1.24']
         # image: ['centos:7']
-        image: ['bdwyertech/el7-xc:latest']
+        image: ['ghcr.io/bdwyertech/el-xc:latest']
     runs-on: ubuntu-latest
     container: ${{ matrix.image }}
     steps:
-      - name: Install Go
-        run: |
-          curl -OL https://go.dev/dl/go1.24.2.linux-amd64.tar.gz
-          tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
-          export PATH=$PATH:/usr/local/go/bin
-          echo "PATH=$PATH:/usr/local/go/bin" >> $GITHUB_ENV
-          go version # Verify installation
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: matrix.go
 
       - name: Install Dependencies
         run: |
-          yum install -y https://archives.fedoraproject.org/pub/archive/epel/7/x86_64/Packages/e/epel-release-7-14.noarch.rpm
-          # Leverage IUS Repository for latest version of GIT
-          yum install -y https://repo.ius.io/ius-release-el7.rpm
-          yum install -y openssl-devel systemd-devel gcc git236 wget
-          ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
-          git config --global --add safe.directory $GITHUB_WORKSPACE
+          dnf install -y openssl-devel systemd-devel gcc git wget
+          # ln -s /usr/include/systemd/ /opt/cross/aarch64-linux/include/systemd
 
       - name: Git Info
         id: git
