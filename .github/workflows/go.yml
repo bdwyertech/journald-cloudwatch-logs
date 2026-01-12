@@ -24,6 +24,7 @@ jobs:
           GOFLAGS: '-mod=vendor'
           STATICCHECK_VERSION: '2025.1.1'
         run: |
+          dnf install -y wget
           git config --global --add safe.directory $GITHUB_WORKSPACE
           wget -qO- https://github.com/dominikh/go-tools/releases/download/${STATICCHECK_VERSION}/staticcheck_linux_amd64.tar.gz | tar zxf - --directory /usr/local/bin --strip-components=1 staticcheck/staticcheck
           go fmt $(go list ./... | grep -v /vendor/) | xargs -I {} -r /bin/sh -c "/bin/echo {} && exit 1"
