@@ -99,7 +99,7 @@ jobs:
           subject-checksums: ./dist/checksums.txt
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           format: 'sarif'
           output: 'trivy-results.sarif'
